@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tes Serverless POST</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 400px; margin: auto; }
+    input, button { width: 100%; padding: 10px; margin-top: 10px; box-sizing: border-box; }
+    pre { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h3>Kirim Pesan ke Serverless</h3>
+  <input type="text" id="inputPesan" placeholder="Ketik pesan apa saja di sini...">
+  <button onclick="kirimData()">Kirim Data (POST)</button>
+  
+  <h4>Respon dari Server:</h4>
+  <pre id="hasil">Belum ada data dikirim...</pre>
+
+  <script>
+    async function kirimData() {
+      const pesan = document.getElementById('inputPesan').value;
+      const kotakHasil = document.getElementById('hasil');
+      kotakHasil.textContent = 'Mengirim...';
+
+      const respon = await fetch('/api/kirim-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pesanUser: pesan })
+      });
+
+      const data = await respon.json();
+      kotakHasil.textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
