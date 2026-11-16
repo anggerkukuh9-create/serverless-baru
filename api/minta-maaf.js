@@ -14,9 +14,9 @@ export default function handler(req, res) {
     // Mengolah data menjadi draf kartu permintaan maaf yang rapi di server
     const drafKartu = {
       judul: "💌 Surat Permintaan Maaf Resmi",
-      kepada: `Untuk ${Marsya Aurelia},`,
+      kepada: `Untuk ${namaPenerima},`,
       isiPesan: `Aku ingin meminta maaf yang sebesar-besarnya atas kesalahanku terkait "${kesalahan}". ${pesanTambahan ? pesanTambahan : ''} Aku berjanji tidak akan mengulanginya lagi.`,
-      penutup: `Tertanda,\n${Sosok}`,
+      penutup: `Tertanda,\n${namaPengirim}`,
       waktuDibuat: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })
     };
 
