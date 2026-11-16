@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sebuah Pesan Spesial Untukmu 💌</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-rose-950 text-slate-100 min-h-screen flex items-center justify-center p-4">
+
+  <div class="bg-slate-900/80 backdrop-blur-md p-8 rounded-3xl shadow-2xl w-full max-w-md border border-rose-500/30 text-center space-y-6 relative overflow-hidden">
+    
+    <!-- Hiasan Cahaya Latar Belakang -->
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-rose-500/20 rounded-full blur-2xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-pink-500/20 rounded-full blur-2xl"></div>
+
+    <!-- Header / Emoji -->
+    <div class="text-4xl animate-bounce">🌹💌✨</div>
+
+    <div>
+      <h1 class="text-2xl font-bold text-rose-400 mb-1">Surat Permintaan Maaf</h1>
+      <p id="teksPenerima" class="text-sm font-medium text-pink-300">Untuk Seseorang yang Spesial</p>
+    </div>
+
+    <!-- Isi Kartu -->
+    <div class="bg-slate-800/60 border border-slate-700/60 p-5 rounded-2xl text-left space-y-3 text-sm text-slate-300 shadow-inner">
+      <p>Halo,</p>
+      <p id="teksIsi" class="leading-relaxed">
+        Aku ingin meminta maaf yang sebesar-besarnya dari lubuk hatiku yang paling dalam.
+      </p>
+      <p id="teksTambahanKustom" class="italic text-rose-300/90 text-xs hidden"></p>
+    </div>
+
+    <!-- Penutup & Pengirim -->
+    <div class="pt-2">
+      <p class="text-xs text-slate-400">Beri aku kesempatan ya?</p>
+      <p id="teksPengirim" class="text-base font-semibold text-rose-400 mt-2">Tertanda, [Nama Kamu]</p>
+    </div>
+
+    <!-- Tombol Interaksi Manis -->
+    <div class="pt-4 space-y-2">
+      <button onclick="terimaMaaf()" id="btnMaaf" class="w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-medium py-3 rounded-xl transition shadow-lg shadow-rose-600/30 text-sm">
+        Dimaafin Kok ❤️
+      </button>
+      <p id="pesanBalasan" class="text-xs text-pink-400 font-medium h-6"></p>
+    </div>
+
+  </div>
+
+  <script>
+    // Membaca parameter dari URL secara otomatis saat link dibuka
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    const penerima = urlParams.get('penerima');
+    const kesalahan = urlParams.get('kesalahan');
+    const pesanTambahan = urlParams.get('pesan');
+    const pengirim = urlParams.get('pengirim');
+
+    // Menyesuaikan teks di halaman jika parameter ada
+    if (penerima) {
+      document.getElementById('teksPenerima').textContent = `Untuk: ${penerima}`;
+    }
+
+    if (kesalahan || pengirim) {
+      let isi = "Aku menyadari kesalahanku";
+      if (kesalahan) {
+        isi += ` terkait "${kesalahan}"`;
+      }
+      isi += ". Aku berjanji tidak akan mengulanginya lagi dan berharap kamu bisa memaafkanku.";
+      document.getElementById('teksIsi').textContent = isi;
+    }
+
+    if (pesanTambahan) {
+      const elTambahan = document.getElementById('teksTambahanKustom');
+      elTambahan.textContent = `"${pesanTambahan}"`;
+      elTambahan.classList.remove('hidden');
+    }
+
+    if (pengirim) {
+      document.getElementById('teksPengirim').textContent = `Tertanda, ${pengirim} ❤️`;
+    }
+
+    // Fungsi interaktif tombol
+    function terimaMaaf() {
+      const btn = document.getElementById('btnMaaf');
+      const balasan = document.getElementById('pesanBalasan');
+      
+      btn.style.display = 'none';
+      balasan.textContent = 'Yeay! Terima kasih banyak sudah memaafkan ya! 🥰✨';
+    }
+  </script>
+</body>
+</html>
