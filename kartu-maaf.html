@@ -3,90 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sebuah Pesan Spesial Untukmu 💌</title>
+  <title>Aplikasi Serverless Modern</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-rose-950 text-slate-100 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4">
 
-  <div class="bg-slate-900/80 backdrop-blur-md p-8 rounded-3xl shadow-2xl w-full max-w-md border border-rose-500/30 text-center space-y-6 relative overflow-hidden">
+  <div class="bg-slate-800 p-6 rounded-2xl shadow-xl w-full max-w-md border border-slate-700 space-y-6">
     
-    <!-- Hiasan Cahaya Latar Belakang -->
-    <div class="absolute -top-12 -right-12 w-32 h-32 bg-rose-500/20 rounded-full blur-2xl"></div>
-    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-pink-500/20 rounded-full blur-2xl"></div>
-
-    <!-- Header / Emoji -->
-    <div class="text-4xl animate-bounce">🌹💌✨</div>
-
+    <!-- Bagian 1: Kirim Pesan -->
     <div>
-      <h1 class="text-2xl font-bold text-rose-400 mb-1">Surat Permintaan Maaf</h1>
-      <p id="teksPenerima" class="text-sm font-medium text-pink-300">Untuk Seseorang yang Spesial</p>
+      <h2 class="text-xl font-bold mb-1 text-indigo-400">Kirim Pesan Serverless</h2>
+      <p class="text-xs text-slate-400 mb-4">Uji coba validasi dan pengolahan data POST.</p>
+      
+      <div class="space-y-3">
+        <input type="text" id="inputPesan" placeholder="Ketik sesuatu di sini..." 
+          class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg focus:outline-none focus:border-indigo-500 text-slate-100 placeholder-slate-500 text-sm">
+        
+        <button onclick="kirimData()" 
+          class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg transition text-sm shadow-lg shadow-indigo-600/30">
+          Kirim Data (POST)
+        </button>
+      </div>
+
+      <div class="mt-3">
+        <span class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Respon Server:</span>
+        <pre id="hasilPesan" class="bg-slate-900 border border-slate-700 p-3 rounded-lg text-emerald-400 text-xs overflow-x-auto min-h-[60px]">Belum ada data...</pre>
+      </div>
     </div>
 
-    <!-- Isi Kartu -->
-    <div class="bg-slate-800/60 border border-slate-700/60 p-5 rounded-2xl text-left space-y-3 text-sm text-slate-300 shadow-inner">
-      <p>Halo,</p>
-      <p id="teksIsi" class="leading-relaxed">
-        Aku ingin meminta maaf yang sebesar-besarnya dari lubuk hatiku yang paling dalam.
-      </p>
-      <p id="teksTambahanKustom" class="italic text-rose-300/90 text-xs hidden"></p>
-    </div>
+    <hr class="border-slate-700">
 
-    <!-- Penutup & Pengirim -->
-    <div class="pt-2">
-      <p class="text-xs text-slate-400">Beri aku kesempatan ya?</p>
-      <p id="teksPengirim" class="text-base font-semibold text-rose-400 mt-2">Tertanda, [Nama Kamu]</p>
-    </div>
+    <!-- Bagian 2: Kalkulator API -->
+    <div>
+      <h2 class="text-xl font-bold mb-1 text-teal-400">Kalkulator Serverless</h2>
+      <p class="text-xs text-slate-400 mb-4">Menghitung angka via endpoint /api/hitung.</p>
+      
+      <div class="grid grid-cols-2 gap-2 mb-3">
+        <input type="number" id="angka1" placeholder="Angka 1" 
+          class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg focus:outline-none focus:border-teal-500 text-slate-100 text-sm">
+        <input type="number" id="angka2" placeholder="Angka 2" 
+          class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg focus:outline-none focus:border-teal-500 text-slate-100 text-sm">
+      </div>
 
-    <!-- Tombol Interaksi Manis -->
-    <div class="pt-4 space-y-2">
-      <button onclick="terimaMaaf()" id="btnMaaf" class="w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-medium py-3 rounded-xl transition shadow-lg shadow-rose-600/30 text-sm">
-        Dimaafin Kok ❤️
+      <button onclick="hitungAngka()" 
+        class="w-full bg-teal-600 hover:bg-teal-500 text-white font-medium py-2.5 rounded-lg transition text-sm shadow-lg shadow-teal-600/30">
+        Hitung Penjumlahan
       </button>
-      <p id="pesanBalasan" class="text-xs text-pink-400 font-medium h-6"></p>
+
+      <div class="mt-3">
+        <span class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Hasil Kalkulator:</span>
+        <pre id="hasilHitung" class="bg-slate-900 border border-slate-700 p-3 rounded-lg text-teal-300 text-xs overflow-x-auto min-h-[60px]">Belum dihitung...</pre>
+      </div>
+    </div>
+
+    <hr class="border-slate-700">
+
+    <!-- Bagian 3: Generator Link Kartu Maaf Spesial -->
+    <div>
+      <h2 class="text-xl font-bold mb-1 text-pink-400">💌 Generator Link Kartu Maaf</h2>
+      <p class="text-xs text-slate-400 mb-4">Buat link spesial untuk Marsya secara otomatis!</p>
+      
+      <div class="space-y-3">
+        <input type="text" id="penerima" value="Marsya" placeholder="Nama Penerima" 
+          class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg focus:outline-none focus:border-pink-500 text-slate-100 placeholder-slate-500 text-sm">
+        <input type="text" id="kesalahan" placeholder="Kesalahanmu (cth: telat balas chat)" 
+          class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg focus:outline-none focus:border-pink-500 text-slate-100 placeholder-slate-500 text-sm">
+        <input type="text" id="pesanTambahan" placeholder="Pesan tambahan / rayuan (opsional)" 
+          class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg focus:outline-none focus:border-pink-500 text-slate-100 placeholder-slate-500 text-sm">
+        <input type="text" id="pengirim" value="Angger" placeholder="Nama Pengirim" 
+          class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg focus:outline-none focus:border-pink-500 text-slate-100 placeholder-slate-500 text-sm">
+        
+        <button onclick="generateLink()" 
+          class="w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-medium py-2.5 rounded-lg transition text-sm shadow-lg shadow-pink-600/30">
+          Buat Link Spesial ✨
+        </button>
+      </div>
+
+      <div class="mt-3 space-y-2">
+        <span class="block text-[10px] font-semibold text-pink-400 uppercase">Link Kartu Kamu:</span>
+        <input type="text" id="hasilLink" readonly placeholder="Link akan muncul di sini..." 
+          class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-rose-300 text-xs focus:outline-none">
+        <button onclick="salinLink()" 
+          class="w-full bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium py-2 rounded-lg transition text-xs">
+          📋 Salin Link
+        </button>
+      </div>
     </div>
 
   </div>
 
   <script>
-    // Membaca parameter dari URL secara otomatis saat link dibuka
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    const penerima = urlParams.get('Marsya');
-    const kesalahan = urlParams.get('kesalahan');
-    const pesanTambahan = urlParams.get('pesan');
-    const pengirim = urlParams.get('Angger');
-
-    // Menyesuaikan teks di halaman jika parameter ada
-    if (penerima) {
-      document.getElementById('teksPenerima').textContent = `Untuk: ${penerima}`;
+    async function kirimData() {
+      const pesan = document.getElementById('inputPesan').value;
+      const kotakHasil = document.getElementById('hasilPesan');
+      if (!pesan.trim()) { kotakHasil.textContent = '⚠️ Pesan kosong!'; return; }
+      kotakHasil.textContent = 'Mengirim...';
+      try {
+        const respon = await fetch('/api/kirim-data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pesanUser: pesan })
+        });
+        const data = await respon.json();
+        kotakHasil.textContent = JSON.stringify(data, null, 2);
+      } catch (e) { kotakHasil.textContent = '❌ Gagal.'; }
     }
 
-    if (kesalahan || pengirim) {
-      let isi = "Aku menyadari kesalahanku";
-      if (kesalahan) {
-        isi += ` terkait "${kesalahan}"`;
+    async function hitungAngka() {
+      const a1 = document.getElementById('angka1').value;
+      const a2 = document.getElementById('angka2').value;
+      const kotakHasil = document.getElementById('hasilHitung');
+      if (!a1 || !a2) { kotakHasil.textContent = '⚠️ Masukkan angka!'; return; }
+      kotakHasil.textContent = 'Menghitung...';
+      try {
+        const respon = await fetch(`/api/hitung?angka1=${a1}&angka2=${a2}`);
+        const data = await respon.json();
+        kotakHasil.textContent = JSON.stringify(data, null, 2);
+      } catch (e) { kotakHasil.textContent = '❌ Gagal.'; }
+    }
+
+    function generateLink() {
+      const penerima = document.getElementById('penerima').value;
+      const kesalahan = document.getElementById('kesalahan').value;
+      const pesanTambahan = document.getElementById('pesanTambahan').value;
+      const pengirim = document.getElementById('pengirim').value;
+      const kotakLink = document.getElementById('hasilLink');
+
+      if (!penerima || !kesalahan || !pengirim) {
+        alert('Nama penerima, kesalahan, dan pengirim wajib diisi!');
+        return;
       }
-      isi += ". Aku berjanji tidak akan mengulanginya lagi dan berharap kamu bisa memaafkanku.";
-      document.getElementById('teksIsi').textContent = isi;
-    }
 
-    if (pesanTambahan) {
-      const elTambahan = document.getElementById('teksTambahanKustom');
-      elTambahan.textContent = `"${pesanTambahan}"`;
-      elTambahan.classList.remove('hidden');
-    }
-
-    if (pengirim) {
-      document.getElementById('teksPengirim').textContent = `Tertanda, ${Angger} ❤️`;
-    }
-
-    // Fungsi interaktif tombol
-    function terimaMaaf() {
-      const btn = document.getElementById('btnMaaf');
-      const balasan = document.getElementById('pesanBalasan');
+      // Mengambil domain website saat ini secara otomatis
+      const domainBase = window.location.origin;
       
-      btn.style.display = 'none';
-      balasan.textContent = 'Yeay! Terima kasih banyak sudah memaafkan ya! 🥰✨';
+      // Mengubah teks biasa menjadi format URL yang aman (otomatis menangani spasi)
+      const params = new URLSearchParams({
+        penerima: penerima,
+        kesalahan: kesalahan,
+        pesan: pesanTambahan,
+        pengirim: pengirim
+      });
+
+      const linkFinal = `${domainBase}/kartu-maaf.html?${params.toString()}`;
+      kotakLink.value = linkFinal;
+    }
+
+    function salinLink() {
+      const kotakLink = document.getElementById('hasilLink');
+      if (!kotakLink.value) {
+        alert('Buat linknya terlebih dahulu!');
+        return;
+      }
+      kotakLink.select();
+      kotakLink.setSelectionRange(0, 99999); // Untuk perangkat seluler
+      navigator.clipboard.writeText(kotakLink.value);
+      alert('Link berhasil disalin! Silakan paste (tempel) di WhatsApp untuk dikirim ke Marsya.');
     }
   </script>
 </body>
